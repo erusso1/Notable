@@ -1,0 +1,16 @@
+PODS:
+  - Notable (0.1.0)
+
+DEPENDENCIES:
+  - Notable (from `../`)
+
+EXTERNAL SOURCES:
+  Notable:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Notable: 5ad199309827ce162f0740c4a9bdfe26a3b74039
+
+PODFILE CHECKSUM: d6ce786ddc6cb37b7e61bdd759f2d444bb62b7f6
+
+COCOAPODS: 1.6.0
