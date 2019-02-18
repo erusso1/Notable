@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Notable'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of Notable.'
+  s.summary          = 'Lightweight UserNotifications wrapper and payload handling'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -32,6 +32,7 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'Notable/Classes/**/*'
   
+  s.frameworks = 'UserNotifications', 'UIKit'
   # s.resource_bundles = {
   #   'Notable' => ['Notable/Assets/*.png']
   # }

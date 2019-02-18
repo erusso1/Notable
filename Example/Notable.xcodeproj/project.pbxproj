@@ -15,6 +15,8 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		CD161EF5907961703F053CAD /* Pods_Notable_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2327A7C9D730334C4162BD21 /* Pods_Notable_Example.framework */; };
 		E8761CF5738B12C69FEAA24E /* Pods_Notable_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AFAB00F2D201C7926EC4973 /* Pods_Notable_Tests.framework */; };
+		F35B5450221BFA7A0046195C /* NotifcationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35B544F221BFA7A0046195C /* NotifcationHandler.swift */; };
+		F35B5452221C02180046195C /* NotificationPayloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35B5451221C02180046195C /* NotificationPayloads.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,9 @@
 		CA29F191C51C751D5FA852F8 /* Notable.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Notable.podspec; path = ../Notable.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DF053230BF2348B9788AE747 /* Pods-Notable_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notable_Example.release.xcconfig"; path = "Target Support Files/Pods-Notable_Example/Pods-Notable_Example.release.xcconfig"; sourceTree = "<group>"; };
 		E9FA15CCF20632AB3687450C /* Pods-Notable_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notable_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Notable_Tests/Pods-Notable_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		F35B544E221BF8DE0046195C /* Notable_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notable_Example.entitlements; sourceTree = "<group>"; };
+		F35B544F221BFA7A0046195C /* NotifcationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationHandler.swift; sourceTree = "<group>"; };
+		F35B5451221C02180046195C /* NotificationPayloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPayloads.swift; sourceTree = "<group>"; };
 		F8CA12BF50B7B376298E78FC /* Pods-Notable_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notable_Tests.release.xcconfig"; path = "Target Support Files/Pods-Notable_Tests/Pods-Notable_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +77,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				F35B544E221BF8DE0046195C /* Notable_Example.entitlements */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Notable */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -94,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				F35B544F221BFA7A0046195C /* NotifcationHandler.swift */,
+				F35B5451221C02180046195C /* NotificationPayloads.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -212,10 +220,20 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = G7XYQ9QC2U;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = G7XYQ9QC2U;
 						LastSwiftMigration = 1010;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -334,6 +352,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F35B5450221BFA7A0046195C /* NotifcationHandler.swift in Sources */,
+				F35B5452221C02180046195C /* NotificationPayloads.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
@@ -485,10 +505,12 @@
 			baseConfigurationReference = 4944CE9A7A4DFFDF36D955BC /* Pods-Notable_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Notable_Example.entitlements;
+				DEVELOPMENT_TEAM = G7XYQ9QC2U;
 				INFOPLIST_FILE = Notable/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.erusso1.notable-pod";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -499,10 +521,12 @@
 			baseConfigurationReference = DF053230BF2348B9788AE747 /* Pods-Notable_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Notable_Example.entitlements;
+				DEVELOPMENT_TEAM = G7XYQ9QC2U;
 				INFOPLIST_FILE = Notable/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.erusso1.notable-pod";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -512,6 +536,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E9FA15CCF20632AB3687450C /* Pods-Notable_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = G7XYQ9QC2U;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -530,6 +555,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F8CA12BF50B7B376298E78FC /* Pods-Notable_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = G7XYQ9QC2U;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

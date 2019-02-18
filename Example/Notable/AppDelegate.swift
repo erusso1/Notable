@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Notable
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        setupNotable()
+        
         return true
     }
 
@@ -44,3 +48,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate {
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+        Notable.shared.didRegisterRemoteNotificationDeviceToken(deviceToken)
+    }
+}
+
+extension AppDelegate {
+    
+    func setupNotable() {
+     
+        Notable.shared.setup(delegate: NotificationHandler.shared, ignoresForegroundRemoteNotifications: false)
+    }
+}
