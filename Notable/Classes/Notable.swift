@@ -13,9 +13,7 @@ public protocol NTNotificationHandlingDelegate: NSObjectProtocol {
     
     func notable(_ notable: Notable, handleNotificationResponseWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
     
-    func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
-    
-    func notable(_ notable: Notable, handleUIDisplayForNotificationWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?)
+    func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)    
 }
 
 public final class Notable: NSObject {

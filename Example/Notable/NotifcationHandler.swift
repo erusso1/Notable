@@ -50,10 +50,4 @@ extension NotificationHandler: NTNotificationHandlingDelegate {
 
         completionHandler()
     }
-    
-    func notable(_ notable: Notable, handleUIDisplayForNotificationWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?) {
-        
-        print(#function)
-
-    }
 }
