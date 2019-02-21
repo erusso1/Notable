@@ -31,6 +31,15 @@ public final class Notable: NSObject {
         self.delegate = delegate
         self.ignoresForegroundRemoteNotifications = ignoresForegroundRemoteNotifications
     }
+    
+    public func registerCustomNotificationCategory(_ category: NTNotificationCategory, actions: [NTNotificationAction] = []) {
+        
+        let customActions: [UNNotificationAction] = actions.compactMap { $0.toUNNotificationAction() }
+        
+        let customCategory = UNNotificationCategory(identifier: category.stringValue, actions: customActions, intentIdentifiers: [], options: [])
+        
+        UNUserNotificationCenter.current().setNotificationCategories([customCategory])
+    }
 }
 
 extension Notable {

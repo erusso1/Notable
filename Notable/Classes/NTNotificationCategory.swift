@@ -9,7 +9,7 @@ import Foundation
 
 public struct NTNotificationCategory {
     
-    let stringValue: String
+    public let stringValue: String
     
     init(stringValue: String) {
         self.stringValue = stringValue
@@ -27,7 +27,7 @@ extension NTNotificationCategory: Equatable { }
 
 extension NTNotificationCategory {
     
-    public static let notableDefaultUICategory: NTNotificationCategory = "notable_default_ui_category"
+    static let notableDefaultUICategory: NTNotificationCategory = "notable_default_ui_category"
 }
 
 public func ==(lhs: NTNotificationCategory, rhs: NTNotificationCategory) -> Bool { return lhs.stringValue == rhs.stringValue }

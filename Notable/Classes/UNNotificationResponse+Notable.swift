@@ -19,7 +19,7 @@ extension UNNotificationResponse {
     
     func category() -> NTNotificationCategory { return notification.category() }
     
-    func action() -> NTNotificationAction { return .init(stringValue: actionIdentifier) }
+    func action() -> NTNotificationAction { return .init(identifier: actionIdentifier, title: nil, options: nil) }
     
     func userInfo() -> [AnyHashable : Any] { return notification.userInfo() }
 }

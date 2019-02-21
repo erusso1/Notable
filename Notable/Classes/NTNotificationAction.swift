@@ -6,23 +6,39 @@
 //
 
 import Foundation
+import UserNotifications
 
 public struct NTNotificationAction {
     
-    let stringValue: String
+    public let identifier: String
     
-    init(stringValue: String) {
-        self.stringValue = stringValue
+    public let title: String?
+    
+    public let options: UNNotificationActionOptions?
+    
+    init(identifier: String, title: String?, options: UNNotificationActionOptions?) {
+        self.identifier = identifier
+        self.title = title
+        self.options = options
+    }
+}
+
+extension NTNotificationAction {
+    
+    func toUNNotificationAction() -> UNNotificationAction? {
+        
+        guard let title = title, let options = options else { return nil }
+        return UNNotificationAction(identifier: identifier, title: title, options: options)
     }
 }
 
 extension NTNotificationAction: ExpressibleByStringLiteral {
     
     public init(stringLiteral value: String) {
-        self.init(stringValue: value)
+        self.init(identifier: value, title: nil, options: nil)
     }
 }
 
 extension NTNotificationAction: Equatable { }
 
-public func ==(lhs: NTNotificationAction, rhs: NTNotificationAction) -> Bool { return lhs.stringValue == rhs.stringValue }
+public func ==(lhs: NTNotificationAction, rhs: NTNotificationAction) -> Bool { return lhs.identifier == rhs.identifier }
