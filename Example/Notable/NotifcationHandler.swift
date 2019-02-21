@@ -36,12 +36,11 @@ extension NotificationHandler: NTNotificationHandlingDelegate {
         
     }
     
-    func notable(_ notable: Notable, handleNotificationResponseWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
+    func notable(_ notable: Notable, didSelectCustomNotificationWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
         
         print(#function)
         
         completionHandler()
-
     }
     
     func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {

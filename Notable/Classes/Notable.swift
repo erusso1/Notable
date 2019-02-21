@@ -11,7 +11,7 @@ public protocol NTNotificationHandlingDelegate: NSObjectProtocol {
     
     func notable(_ notable: Notable, didReceiveRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?)
     
-    func notable(_ notable: Notable, handleNotificationResponseWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
+    func notable(_ notable: Notable, didSelectCustomNotificationWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
     
     func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)    
 }
@@ -112,23 +112,16 @@ extension Notable: UNUserNotificationCenterDelegate {
         let action = response.action()
         let payload = delegate?.notable(self, payloadFromNotification: response.userInfo())
 
-        // User selects
-        if category == .notableDefaultUICategory {
+        // User selects notable-generated banner or non-custom action.
+        if category == .notableDefaultUICategory || (action == .dismiss || action == .default) {
             
             delegate?.notable(self, didSelectNotificationBannerWith: category, action: action, payload: payload, completionHandler: completionHandler)
         }
         
+        // User selects a custom cateogry or custom action.
         else {
             
-            delegate?.notable(self, handleNotificationResponseWith: category, action: action, payload: payload) { [unowned self] in
-                
-                if let payload = payload {
-                    
-                    self.displayBannerUINotificationWith(payload: payload)
-                }
-                
-                completionHandler()
-            }
+            delegate?.notable(self, didSelectCustomNotificationWith: category, action: action, payload: payload, completionHandler: completionHandler)            
         }
     }
 }

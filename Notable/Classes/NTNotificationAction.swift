@@ -24,6 +24,13 @@ public struct NTNotificationAction {
 }
 
 extension NTNotificationAction {
+
+    public static let `default` = NTNotificationAction(stringLiteral: UNNotificationDefaultActionIdentifier)
+
+    public static let dismiss = NTNotificationAction(stringLiteral: UNNotificationDismissActionIdentifier)
+}
+
+extension NTNotificationAction {
     
     func toUNNotificationAction() -> UNNotificationAction? {
         
