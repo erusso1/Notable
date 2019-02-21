@@ -16,7 +16,7 @@ public struct NTNotificationAction {
     
     public let options: UNNotificationActionOptions?
     
-    init(identifier: String, title: String?, options: UNNotificationActionOptions?) {
+    public init(identifier: String, title: String?, options: UNNotificationActionOptions?) {
         self.identifier = identifier
         self.title = title
         self.options = options
