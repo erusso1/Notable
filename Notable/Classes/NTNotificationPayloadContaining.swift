@@ -13,7 +13,7 @@ public protocol NTNotificationPayloadContaining: Codable {
     var notificationName: Notification.Name { get }
 }
 
-public protocol NTNotificationPayloadDisplaying: Codable {
+public protocol NTNotificationPayloadDisplaying: NTNotificationPayloadContaining {
     
     var bannerTitle: String { get }
     
