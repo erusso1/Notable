@@ -134,7 +134,7 @@ extension Notable: UNUserNotificationCenterDelegate {
 
 extension Notable {
     
-    public func displayBannerUINotificationWith(payload: NTNotificationPayloadContaining, afterDelay delay: TimeInterval? = nil) {
+    public func displayBannerUINotificationWith(payload: NTNotificationPayloadDisplaying, afterDelay delay: TimeInterval? = nil) {
         
         let trigger: UNTimeIntervalNotificationTrigger?
         

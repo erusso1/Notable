@@ -10,16 +10,19 @@ import UserNotifications
 
 public protocol NTNotificationPayloadContaining: Codable {
     
+    var notificationName: Notification.Name { get }
+}
+
+public protocol NTNotificationPayloadDisplaying: Codable {
+    
     var bannerTitle: String { get }
     
     var bannerCaption: String { get }
     
     var localNotificationCustomSoundFileName: String? { get }
-    
-    var notificationName: Notification.Name { get }
 }
 
-extension NTNotificationPayloadContaining {
+extension NTNotificationPayloadDisplaying {
     
     public var localNotificationCustomSoundFileName: String? { return nil }
 
