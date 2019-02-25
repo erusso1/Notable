@@ -9,11 +9,11 @@ public protocol NTNotificationHandlingDelegate: NSObjectProtocol {
     
     func notable(_ notable: Notable, payloadFromNotification userInfo: [AnyHashable : Any]) -> NTNotificationPayloadContaining?
     
-    func notable(_ notable: Notable, didReceiveRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?)
+    func notable(_ notable: Notable, handleRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
     
-    func notable(_ notable: Notable, didSelectCustomNotificationWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
+    func notable(_ notable: Notable, didSelectCustomNotificationActionWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
     
-    func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)    
+    func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
 }
 
 public final class Notable: NSObject {
@@ -99,10 +99,16 @@ extension Notable: UNUserNotificationCenterDelegate {
                 
                 let payload = delegate?.notable(self, payloadFromNotification: notification.userInfo())
                 
-                delegate?.notable(self, didReceiveRemoteNotificationWith: category, payload: payload)
+                delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) {
+                    
+                    if let payload = payload {
+                        
+                        NotificationCenter.default.post(name: payload.notificationName, object: payload)
+                    }
+                    
+                    completionHandler([.sound, .alert])
+                }
             }
-            
-            completionHandler([.sound, .alert])
         }
     }
     
@@ -115,13 +121,13 @@ extension Notable: UNUserNotificationCenterDelegate {
         // User selects notable-generated banner or non-custom action.
         if category == .notableDefaultUICategory || (action == .dismiss || action == .default) {
             
-            delegate?.notable(self, didSelectNotificationBannerWith: category, action: action, payload: payload, completionHandler: completionHandler)
+            delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
         }
         
         // User selects a custom cateogry or custom action.
         else {
             
-            delegate?.notable(self, didSelectCustomNotificationWith: category, action: action, payload: payload, completionHandler: completionHandler)            
+            delegate?.notable(self, didSelectCustomNotificationActionWith: category, action: action, payload: payload, completionHandler: completionHandler)
         }
     }
 }

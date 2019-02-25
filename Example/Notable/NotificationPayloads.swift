@@ -47,4 +47,6 @@ extension BaseNotificationPayload: NTNotificationPayloadContaining {
     }
     
     var localNotificationCustomSoundFileName: String? { return nil }
+    
+    var notificationName: Notification.Name { return Notification.Name(action.rawValue) }
 }

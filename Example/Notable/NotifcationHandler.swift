@@ -30,20 +30,21 @@ extension NotificationHandler: NTNotificationHandlingDelegate {
         return nil
     }
     
-    func notable(_ notable: Notable, didReceiveRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?) {
-        
-        print(#function)
-        
-    }
-    
-    func notable(_ notable: Notable, didSelectCustomNotificationWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
+    func notable(_ notable: Notable, handleRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
         
         print(#function)
         
         completionHandler()
     }
     
-    func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
+    func notable(_ notable: Notable, didSelectCustomNotificationActionWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
+        
+        print(#function)
+        
+        completionHandler()
+    }
+    
+    func notable(_ notable: Notable, didSelectNotificationBannerWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
         
         print(#function)
 

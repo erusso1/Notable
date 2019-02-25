@@ -14,7 +14,9 @@ public protocol NTNotificationPayloadContaining: Codable {
     
     var bannerCaption: String { get }
     
-    var localNotificationCustomSoundFileName: String? { get }    
+    var localNotificationCustomSoundFileName: String? { get }
+    
+    var notificationName: Notification.Name { get }
 }
 
 extension NTNotificationPayloadContaining {
