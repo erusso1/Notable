@@ -101,9 +101,9 @@ extension Notable: UNUserNotificationCenterDelegate {
                 
                 delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) {
                     
-                    if let payload = payload {
+                    if let payload = payload, let notificationName = payload.notificationName {
                         
-                        NotificationCenter.default.post(name: payload.notificationName, object: payload)
+                        NotificationCenter.default.post(name: notificationName, object: payload)
                     }
                     
                     completionHandler([.sound, .alert])

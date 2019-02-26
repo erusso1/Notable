@@ -10,7 +10,12 @@ import UserNotifications
 
 public protocol NTNotificationPayloadContaining: Codable {
     
-    var notificationName: Notification.Name { get }
+    var notificationName: Notification.Name? { get }
+}
+
+extension NTNotificationPayloadContaining {
+    
+    var notificationName: Notification.Name? { return nil }
 }
 
 public protocol NTNotificationPayloadDisplaying: NTNotificationPayloadContaining {

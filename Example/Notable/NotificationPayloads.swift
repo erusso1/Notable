@@ -30,7 +30,7 @@ struct BaseNotificationPayload: Codable {
 
 extension BaseNotificationPayload: NTNotificationPayloadContaining {
     
-    var notificationName: Notification.Name { return Notification.Name(action.rawValue) }
+    var notificationName: Notification.Name? { return Notification.Name(action.rawValue) }
 }
 
 extension BaseNotificationPayload: NTNotificationPayloadDisplaying {
