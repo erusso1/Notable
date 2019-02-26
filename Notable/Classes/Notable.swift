@@ -103,7 +103,10 @@ extension Notable: UNUserNotificationCenterDelegate {
                     
                     if let payload = payload, let notificationName = payload.notificationName {
                         
-                        NotificationCenter.default.post(name: notificationName, object: payload)
+                        DispatchQueue.main.async {
+                            
+                            NotificationCenter.default.post(name: notificationName, object: payload)
+                        }
                     }
                     
                     completionHandler([.sound, .alert])
