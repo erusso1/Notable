@@ -50,7 +50,9 @@ class ViewController: UIViewController {
         
         let payload = BaseNotificationPayload(action: .newRestaurantNearby, reference: UUID().uuidString)
         
-        Notable.shared.displayBannerUINotificationWith(payload: payload)
+        //Notable.shared.displayBannerUINotificationWith(payload: payload)
+        
+        Notable.shared.displayBannerUINotificationWith(payload: payload, at: Date(timeIntervalSinceNow: 3))
     }
 }
 
