@@ -136,6 +136,15 @@ extension Notable: UNUserNotificationCenterDelegate {
 
 extension Notable {
     
+    public func displayBannerUINotificationWith(payload: NTNotificationPayloadDisplaying, at date: Date) {
+
+        let interval = date.timeIntervalSince(Date())
+        
+        guard interval > 0 else { return }
+        
+        displayBannerUINotificationWith(payload: payload, afterDelay: interval)
+    }
+    
     public func displayBannerUINotificationWith(payload: NTNotificationPayloadDisplaying, afterDelay delay: TimeInterval? = nil) {
         
         let trigger: UNTimeIntervalNotificationTrigger?
