@@ -94,23 +94,22 @@ extension Notable: UNUserNotificationCenterDelegate {
         else {
             
             let category = notification.category()
-
-            if category != .notableDefaultUICategory {
+    
+            guard category != .notableDefaultUICategory else { return completionHandler([.sound, .alert])}
+            
+            let payload = delegate?.notable(self, payloadFromNotification: notification.userInfo())
+            
+            delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) {
                 
-                let payload = delegate?.notable(self, payloadFromNotification: notification.userInfo())
-                
-                delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) {
+                if let payload = payload, let notificationName = payload.notificationName {
                     
-                    if let payload = payload, let notificationName = payload.notificationName {
+                    DispatchQueue.main.async {
                         
-                        DispatchQueue.main.async {
-                            
-                            NotificationCenter.default.post(name: notificationName, object: payload)
-                        }
+                        NotificationCenter.default.post(name: notificationName, object: payload)
                     }
-                    
-                    completionHandler([.sound, .alert])
                 }
+                
+                completionHandler([.sound, .alert])
             }
         }
     }
