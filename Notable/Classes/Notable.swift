@@ -123,7 +123,18 @@ extension Notable: UNUserNotificationCenterDelegate {
         // User selects notable-generated banner or non-custom action.
         if category == .notableDefaultUICategory || (action == .dismiss || action == .default) {
             
-            delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
+            if UIApplication.shared.applicationState == .active {
+                
+                delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
+            }
+            
+            else {
+                
+                delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) { [unowned self] in
+                    
+                    self.delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
+                }
+            }
         }
         
         // User selects a custom cateogry or custom action.
