@@ -22,28 +22,39 @@ public final class Notable: NSObject {
     
     weak var delegate: NTNotificationHandlingDelegate?
     
-    var ignoresForegroundRemoteNotifications: Bool!
+    private var ignoresForegroundRemoteNotifications: Bool!
     
-    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    private var executesDeferredNotificationHandlerImmediately: Bool!
     
-    public func registerBackgroundTask() {
-        backgroundTask = UIApplication.shared.beginBackgroundTask { [unowned self] in
-            self.endBackgroundTask()
-        }
-        assert(backgroundTask != .invalid)
-    }
+    private var deferredNotificationHandler: (() -> Void)?
     
-    public func endBackgroundTask() {
-        UIApplication.shared.endBackgroundTask(backgroundTask)
-        backgroundTask = .invalid
-    }
-    
-    public func setup(delegate: NTNotificationHandlingDelegate, ignoresForegroundRemoteNotifications: Bool = true) {
+    public func setup(delegate: NTNotificationHandlingDelegate, ignoresForegroundRemoteNotifications: Bool = true, executesDeferredNotificationHandlerImmediately: Bool = true) {
         
         UNUserNotificationCenter.current().delegate = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveApplicationDidBecomeActiveNotification(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
         self.delegate = delegate
         self.ignoresForegroundRemoteNotifications = ignoresForegroundRemoteNotifications
+        self.executesDeferredNotificationHandlerImmediately = executesDeferredNotificationHandlerImmediately
+    }
+    
+    public func performDeferredNotificationHandlerIfNeeded() {
+        
+        guard let handler = self.deferredNotificationHandler else { return }
+        
+        handler()
+        
+        self.deferredNotificationHandler = nil
+    }
+    
+    @objc private func didReceiveApplicationDidBecomeActiveNotification(_ notification: Notification) {
+        
+        guard executesDeferredNotificationHandlerImmediately else { return }
+        
+        deferredNotificationHandler?()
+        
+        deferredNotificationHandler = nil
     }
     
     public func registerCustomNotificationCategory(_ category: NTNotificationCategory, actions: [NTNotificationAction] = []) {
@@ -53,6 +64,11 @@ public final class Notable: NSObject {
         let customCategory = UNNotificationCategory(identifier: category.stringValue, actions: customActions, intentIdentifiers: [], options: [])
         
         UNUserNotificationCenter.current().setNotificationCategories([customCategory])
+    }
+    
+    deinit {
+        
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -144,15 +160,14 @@ extension Notable: UNUserNotificationCenterDelegate {
             
             else {
                 
-                self.registerBackgroundTask()
-                
-                delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) { [unowned self] in
+                self.deferredNotificationHandler = { [unowned self] in
                     
-                    self.endBackgroundTask()
-                    
-                    DispatchQueue.main.async {
+                    self.delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) { [unowned self] in
                         
-                        self.delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
+                        DispatchQueue.main.async {
+                            
+                            self.delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
+                        }
                     }
                 }
             }
