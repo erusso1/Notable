@@ -7,7 +7,7 @@ public protocol NTNotificationHandlingDelegate: NSObjectProtocol {
     
     func notable(_ notable: Notable, didRegisterWithDeviceToken deviceToken: String)
     
-    func notable(_ notable: Notable, payloadFromNotification userInfo: [AnyHashable : Any]) -> NTNotificationPayloadContaining?
+    func notable(_ notable: Notable, payloadFromNotification userInfo: [AnyHashable : Any], channel: NTNotificationChannel) -> NTNotificationPayloadContaining?
     
     func notable(_ notable: Notable, handleRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
     
@@ -97,7 +97,7 @@ extension Notable: UNUserNotificationCenterDelegate {
     
             guard category != .notableDefaultUICategory else { return completionHandler([.sound, .alert])}
             
-            let payload = delegate?.notable(self, payloadFromNotification: notification.userInfo())
+            let payload = delegate?.notable(self, payloadFromNotification: notification.userInfo(), channel: .apns)
             
             delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) {
                 
@@ -118,7 +118,7 @@ extension Notable: UNUserNotificationCenterDelegate {
         
         let category = response.category()
         let action = response.action()
-        let payload = delegate?.notable(self, payloadFromNotification: response.userInfo())
+        let payload = delegate?.notable(self, payloadFromNotification: response.userInfo(), channel: category == .notableDefaultUICategory ? .local : .apns)
 
         // User selects notable-generated banner or non-custom action.
         if category == .notableDefaultUICategory || (action == .dismiss || action == .default) {

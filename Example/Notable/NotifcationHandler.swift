@@ -23,7 +23,7 @@ extension NotificationHandler: NTNotificationHandlingDelegate {
         print("Device token: \(deviceToken)")
     }
     
-    func notable(_ notable: Notable, payloadFromNotification userInfo: [AnyHashable : Any]) -> NTNotificationPayloadContaining? {
+    func notable(_ notable: Notable, payloadFromNotification userInfo: [AnyHashable : Any], channel: NTNotificationChannel) -> NTNotificationPayloadContaining? {
         
         print(#function)
         
