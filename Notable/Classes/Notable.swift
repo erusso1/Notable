@@ -24,6 +24,20 @@ public final class Notable: NSObject {
     
     var ignoresForegroundRemoteNotifications: Bool!
     
+    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    
+    public func registerBackgroundTask() {
+        backgroundTask = UIApplication.shared.beginBackgroundTask { [unowned self] in
+            self.endBackgroundTask()
+        }
+        assert(backgroundTask != .invalid)
+    }
+    
+    public func endBackgroundTask() {
+        UIApplication.shared.endBackgroundTask(backgroundTask)
+        backgroundTask = .invalid
+    }
+    
     public func setup(delegate: NTNotificationHandlingDelegate, ignoresForegroundRemoteNotifications: Bool = true) {
         
         UNUserNotificationCenter.current().delegate = self
@@ -130,9 +144,16 @@ extension Notable: UNUserNotificationCenterDelegate {
             
             else {
                 
+                self.registerBackgroundTask()
+                
                 delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload) { [unowned self] in
                     
-                    self.delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
+                    self.endBackgroundTask()
+                    
+                    DispatchQueue.main.async {
+                        
+                        self.delegate?.notable(self, didSelectNotificationBannerWith: category, payload: payload, completionHandler: completionHandler)
+                    }
                 }
             }
         }
