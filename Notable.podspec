@@ -17,9 +17,7 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = 'Notable makes registering, parsing, and handling Local & Remote Notifications a breeze.'
 
   s.homepage         = 'https://github.com/erusso1/Notable'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
@@ -29,7 +27,7 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
-
+  s.swift_version = '4.2'
   s.source_files = 'Notable/Classes/**/*'
   
   s.frameworks = 'UserNotifications', 'UIKit'

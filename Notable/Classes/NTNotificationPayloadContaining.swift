@@ -25,13 +25,17 @@ public protocol NTNotificationPayloadDisplaying: NTNotificationPayloadContaining
     var bannerCaption: String { get }
     
     var localNotificationCustomSoundFileName: String? { get }
+    
+    var userInfoEncoder: JSONEncoder { get }
 }
 
 extension NTNotificationPayloadDisplaying {
     
+    public var userInfoEncoder: JSONEncoder { return JSONEncoder() }
+    
     public var localNotificationCustomSoundFileName: String? { return nil }
 
-    func toUNNotifcationContent() -> UNMutableNotificationContent {
+    func toUNNotifcationContent(encoder: JSONEncoder = JSONEncoder()) -> UNMutableNotificationContent {
         
         let content = UNMutableNotificationContent()
         
@@ -46,8 +50,7 @@ extension NTNotificationPayloadDisplaying {
             content.sound = .default
         }
         
-        let encoder = JSONEncoder()
-        let data = try! encoder.encode(self)
+        let data = try! userInfoEncoder.encode(self)
         let userInfo = try! JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
         content.userInfo = userInfo
         
