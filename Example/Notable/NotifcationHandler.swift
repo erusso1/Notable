@@ -8,6 +8,7 @@
 
 import Foundation
 import Notable
+import UserNotifications
 
 final class NotificationHandler: NSObject {
     
@@ -30,11 +31,11 @@ extension NotificationHandler: NTNotificationHandlingDelegate {
         return nil
     }
     
-    func notable(_ notable: Notable, handleRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
+    func notable(_ notable: Notable, handleRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, userInfo: [AnyHashable : Any], completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         print(#function)
         
-        completionHandler()
+        completionHandler([.sound, .alert])
     }
     
     func notable(_ notable: Notable, didSelectCustomNotificationActionWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
