@@ -1,5 +1,5 @@
 PODS:
-  - Notable (1.0.1)
+  - Notable (1.0.2)
 
 DEPENDENCIES:
   - Notable (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Notable: d92340b77aa41c77bd03f17e8bb4d3fcc0532b84
+  Notable: 9990597430faf20121b9f592b1b78e86ad9a0894
 
 PODFILE CHECKSUM: f4efc0d4e8fa07e390602afe6ea85a55394933a9
 

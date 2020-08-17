@@ -31,11 +31,11 @@ extension NotificationHandler: NTNotificationHandlingDelegate {
         return nil
     }
     
-    func notable(_ notable: Notable, handleRemoteNotificationWithCategory category: NTNotificationCategory, channel: NTNotificationChannel, payload: NTNotificationPayloadContaining?, userInfo: [AnyHashable : Any], completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func notable(_ notable: Notable, handleRemoteNotificationWithCategory category: NTNotificationCategory, channel: NTNotificationChannel, payload: NTNotificationPayloadContaining?, userInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
         
         print(#function)
         
-        completionHandler([.sound, .alert])
+        completionHandler()
     }
     
     func notable(_ notable: Notable, didSelectCustomNotificationActionWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void) {
