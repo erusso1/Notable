@@ -9,7 +9,7 @@ public protocol NTNotificationHandlingDelegate: NSObjectProtocol {
     
     func notable(_ notable: Notable, payloadFromNotification userInfo: [AnyHashable : Any], channel: NTNotificationChannel) -> NTNotificationPayloadContaining?
     
-    func notable(_ notable: Notable, handleRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, userInfo: [AnyHashable : Any], completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
+    func notable(_ notable: Notable, handleRemoteNotificationWithCategory category: NTNotificationCategory, channel: NTNotificationChannel, payload: NTNotificationPayloadContaining?, userInfo: [AnyHashable : Any], completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
     
     func notable(_ notable: Notable, didSelectCustomNotificationActionWith category: NTNotificationCategory, action: NTNotificationAction, payload: NTNotificationPayloadContaining?, completionHandler: @escaping () -> Void)
     
@@ -129,7 +129,7 @@ extension Notable: UNUserNotificationCenterDelegate {
             
             let payload = delegate?.notable(self, payloadFromNotification: notification.userInfo(), channel: .apns)
             
-            delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload, userInfo: notification.userInfo()) { options in
+            delegate?.notable(self, handleRemoteNotificationWithCategory: category, channel: .apns, payload: payload, userInfo: notification.userInfo()) { options in
                 
                 if let payload = payload, let notificationName = payload.notificationName {
                     
@@ -162,7 +162,7 @@ extension Notable: UNUserNotificationCenterDelegate {
                 
                 self.deferredNotificationHandler = { [unowned self] in
                     
-                    self.delegate?.notable(self, handleRemoteNotificationWith: category, payload: payload, userInfo: response.notification.userInfo()) { [unowned self] _ in
+                    self.delegate?.notable(self, handleRemoteNotificationWithCategory: category, channel: .apns, payload: payload, userInfo: response.notification.userInfo()) { [unowned self] _ in
                         
                         DispatchQueue.main.async {
                             

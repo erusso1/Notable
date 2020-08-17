@@ -31,7 +31,7 @@ extension NotificationHandler: NTNotificationHandlingDelegate {
         return nil
     }
     
-    func notable(_ notable: Notable, handleRemoteNotificationWith category: NTNotificationCategory, payload: NTNotificationPayloadContaining?, userInfo: [AnyHashable : Any], completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func notable(_ notable: Notable, handleRemoteNotificationWithCategory category: NTNotificationCategory, channel: NTNotificationChannel, payload: NTNotificationPayloadContaining?, userInfo: [AnyHashable : Any], completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         print(#function)
         
